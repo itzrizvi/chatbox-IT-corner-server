@@ -13,7 +13,6 @@ const io = new Server(httpServer,  {
   });
 
 
-  
 app.get('/', (req, res)=>{
     res.status(200).json({name:"Server"})
 })

@@ -17,12 +17,29 @@ app.get('/', (req, res)=>{
     res.status(200).json({name:"Server"})
 })
 
+const users = {};
+
 io.on("connection", (socket) => {
   console.log('Some one is Connected and Socket id' + socket.id);
 
   socket.on('disconnect', ()=>{
       console.log(`${socket.id} is Disconnected`);
-  })
+
+      for(let user in users){
+          if(users[user] ===socket.id){
+              delete users[user];
+          }
+      }
+  });
+
+  socket.on('new_user', (userName)=>{
+      console.log(`Server: ${userName}`);
+      users[userName]= socket.id;
+
+      // Tell Others that someone connected
+      io.emit('new_user', users);
+
+  });
 });
 
 httpServer.listen(port, () => {

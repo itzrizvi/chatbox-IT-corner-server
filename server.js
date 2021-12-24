@@ -42,8 +42,14 @@ io.on("connection", (socket) => {
 
         // Tell Others that someone connected
         io.emit('all_users', users);
-
     });
+
+    socket.on('send_messege', (data) => {
+        console.log(data);
+        const socketId = users[data.receiver];
+
+        io.to(socketId).emit('new_messege', data);
+    })
 });
 
 httpServer.listen(port, () => {

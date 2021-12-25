@@ -12,7 +12,6 @@ const io = new Server(httpServer, {
     },
 });
 
-
 app.get('/', (req, res) => {
     res.status(200).json({ name: "Server" })
 })
@@ -49,6 +48,10 @@ io.on("connection", (socket) => {
         const socketId = users[data.receiver];
 
         io.to(socketId).emit('new_messege', data);
+    });
+
+    socket.on('typingProcess', (typingKeys)=>{
+        socket.broadcast.emit('typingProcess', typingKeys);
     })
 });
 

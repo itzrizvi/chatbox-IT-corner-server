@@ -28,6 +28,7 @@ async function run(){
         await client.connect();
         const database = client.db("chatBox");
         const userAdminsCollection = database.collection('user_Admins');
+        const msgHistoryCollection = database.collection('twinMessege_history');
         console.log("DB CONNECTED");
 
         // // GET all admins
@@ -37,12 +38,22 @@ async function run(){
             res.send(allAdmins);
         });
 
+        // Query Admins
         app.get('/admins/:name', async(req,res)=>{
             const name  = req.params.name;
             const query = {name: name}
             const adminMatched = await userAdminsCollection.findOne(query);
             res.json(adminMatched);
         });
+
+
+        // POST MSG HISTORY
+        // app.post('/msghistory', async (req,res)=>{
+        //     const messegeReq = req.body;
+        //     console.log(messegeReq);
+        //     const result = await msgHistoryCollection.insertOne(messegeReq);
+        //     res.json(result);
+        // });
 
     }
     finally{

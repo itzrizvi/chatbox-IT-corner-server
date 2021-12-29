@@ -28,7 +28,7 @@ async function run(){
         await client.connect();
         const database = client.db("chatBox");
         const userAdminsCollection = database.collection('user_Admins');
-        const msgHistoryCollection = database.collection('twinMessege_history');
+        // const msgHistoryCollection = database.collection('twinMessege_history');
         console.log("DB CONNECTED");
 
         // // GET all admins
